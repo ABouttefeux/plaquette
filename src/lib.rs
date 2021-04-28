@@ -19,11 +19,16 @@
 #![warn(clippy::suboptimal_flops)]
 #![warn(clippy::todo)]
 #![warn(clippy::trivially_copy_pass_by_ref)]
-//#![warn(clippy::type_repetition_in_bounds)]
+#![warn(clippy::type_repetition_in_bounds)]
 #![warn(clippy::unreadable_literal)]
 #![warn(clippy::unseparated_literal_suffix)]
 #![warn(clippy::unused_self)]
 #![warn(clippy::unnecessary_wraps)]
-#![warn(clippy::missing_errors_doc)]
-#![warn(missing_docs)]
+//#![warn(clippy::missing_errors_doc)]
+//#![warn(missing_docs)]
 #![forbid(unsafe_code)]
+
+extern crate nalgebra as na;
+
+pub mod io;
+pub mod plot;
