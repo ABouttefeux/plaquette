@@ -1,10 +1,10 @@
 use std::fs::File;
 use std::vec::Vec;
 
-use average_of_plaquette::{observable, rng::*, sim::get_pb_template};
 use crossbeam::thread;
 use indicatif::{ProgressBar, ProgressStyle};
 use lattice_qcd_rs::statistics;
+use plaquette::{observable, rng::*, sim::get_pb_template};
 use plotters::prelude::*;
 use rand::Rng;
 use rayon::prelude::*;

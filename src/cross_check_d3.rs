@@ -1,5 +1,5 @@
-use average_of_plaquette::{config_scan::*, data_analysis::*, observable, rng::*, sim::*};
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
+use plaquette::{config_scan::*, data_analysis::*, observable, rng::*, sim::*};
 use rayon::prelude::*;
 
 fn main() {

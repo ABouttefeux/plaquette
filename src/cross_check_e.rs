@@ -1,9 +1,6 @@
 use std::env;
 use std::fs;
 
-use average_of_plaquette::{
-    config::*, data_analysis::*, observable, plot_corr_e::*, rng::*, sim::*,
-};
 //use plotter_backend_text::*;
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
 use lattice_qcd_rs::{
@@ -12,6 +9,7 @@ use lattice_qcd_rs::{
 };
 use nalgebra::Complex;
 use once_cell::sync::Lazy;
+use plaquette::{config::*, data_analysis::*, observable, plot_corr_e::*, rng::*, sim::*};
 use rayon::prelude::*;
 use rustfft::FftPlanner;
 
