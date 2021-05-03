@@ -16,6 +16,8 @@ const BOOSTRAP_NUMBER_OF_TIMES: usize = 1_000;
 
 const SEED: u64 = 0x80_7b_ca_86_1a_a0_0c_39;
 
+const DIR: &str = &"data/set_d3/";
+
 type DataComputed = (usize, [f64; 2], [f64; 2], [f64; 2]);
 
 fn main() {
@@ -31,7 +33,7 @@ fn main() {
     let data = N_ARRAY
         .par_iter()
         .map(|n_size| {
-            let file_name = format!("raw_measures_{}.csv", n_size);
+            let file_name = format!("{}raw_measures_{}.csv", DIR, n_size);
             let result = read_file(&file_name, 1_000).unwrap();
             let (mean_and_err_block, mean_and_err_individual, mean_and_err_mean) =
                 thread::scope(|s| {
@@ -92,20 +94,25 @@ fn main() {
         .iter()
         .map(|(n_size, mean_and_err_block, _, _)| (*n_size, *mean_and_err_block))
         .collect::<Vec<(usize, [f64; 2])>>();
-    plot_data(&data_b, BETA, "plot_volume_data_block.svg").unwrap();
+    plot_data(&data_b, BETA, &format!("{}plot_volume_data_block.svg", DIR)).unwrap();
 
     let data_i = data
         .iter()
         .map(|(n_size, _, mean_and_err_individual, _)| (*n_size, *mean_and_err_individual))
         .collect::<Vec<(usize, [f64; 2])>>();
-    plot_data(&data_i, BETA, "plot_volume_data_individual.svg").unwrap();
+    plot_data(
+        &data_i,
+        BETA,
+        &format!("{}plot_volume_data_individual.svg", DIR),
+    )
+    .unwrap();
 
     let data_m = data
         .iter()
         .map(|(n_size, _, _, mean_and_err_mean)| (*n_size, *mean_and_err_mean))
         .collect::<Vec<(usize, [f64; 2])>>();
-    plot_data(&data_m, BETA, "plot_volume_data_mean.svg").unwrap();
-    write_to_file_csv(&data, "data_raw_bootstrap.csv").unwrap();
+    plot_data(&data_m, BETA, &format!("{}plot_volume_data_mean.svg", DIR)).unwrap();
+    write_to_file_csv(&data, &format!("{}data_raw_bootstrap.csv", DIR)).unwrap();
 }
 
 fn write_to_file_csv(data: &[DataComputed], name: &str) -> std::io::Result<()> {

@@ -1,3 +1,5 @@
+use std::fs;
+
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
 use plaquette::{config_scan::*, data_analysis::*, observable, rng::*, sim::*};
 use rayon::prelude::*;
@@ -16,7 +18,10 @@ const BETA: f64 = 24_f64;
 
 const SEED: u64 = 0x43_21_8d_93_a0_55_c3_5f;
 
+const DIR: &str = &"data/set_d3/";
+
 fn main_cross_check_volume() {
+    fs::create_dir_all(DIR).unwrap();
     let beta = BETA;
 
     let vec_dim = N_ARRAY.to_vec();
@@ -75,7 +80,7 @@ fn main_cross_check_volume() {
                 &mut mc,
                 &multi_pb,
                 &observable::volume_obs,
-                "",
+                DIR,
                 "d3",
             )
             .unwrap();
@@ -94,7 +99,8 @@ fn main_cross_check_volume() {
             let _ = write_vec_to_file_csv(
                 &result,
                 &format!(
-                    "raw_measures_{}.csv",
+                    "{}raw_measures_{}.csv",
+                    DIR,
                     cfg.lattice_config().lattice_number_of_points()
                 ),
             );
