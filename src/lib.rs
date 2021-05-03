@@ -1,4 +1,9 @@
-//! Binary application to compute the average of the plaquette
+//! # Plaquette
+//!
+//! ![](https://img.shields.io/badge/language-Rust-orange)
+//! ![Build](https://img.shields.io/github/workflow/status/ABouttefeux/plaquette/Rust)
+//!
+//! Simulation binary using  [lattice-qcd-rs](https://github.com/ABouttefeux/lattice-qcd-rs) that I use for my research.
 
 //#![warn(clippy::as_conversions)]
 #![warn(clippy::cast_sign_loss)]
