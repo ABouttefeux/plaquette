@@ -48,6 +48,64 @@ pub fn plot_data(
     Ok(())
 }
 
+pub fn plot_data_e_and_b(
+    data_e: &[[f64; 2]],
+    data_b: &[[f64; 2]],
+    delta_t: f64,
+    file_name: &str,
+) -> Result<(), Box<dyn std::error::Error>> {
+    let mut y_min = data_e[0][0];
+    let mut y_max = data_e[0][0];
+    for data_mean in &[data_e, data_b] {
+        for el in *data_mean {
+            y_min = y_min.min(el[0]);
+            y_max = y_max.max(el[0]);
+        }
+    }
+
+    let root = SVGBackend::new(file_name, (640, 480)).into_drawing_area();
+    root.fill(&WHITE)?;
+    let mut chart = ChartBuilder::on(&root)
+        .margin(5)
+        .x_label_area_size(30)
+        .y_label_area_size(60)
+        .build_cartesian_2d(
+            0_f64..data_e.len() as f64 * delta_t,
+            (y_min).min(0_f64)..y_max,
+        )?;
+
+    chart
+        .configure_mesh()
+        .y_desc("Correlation")
+        .x_desc("t")
+        .axis_desc_style(("sans-serif", 15))
+        .draw()?;
+
+    chart
+        .draw_series(LineSeries::new(
+            data_e
+                .iter()
+                .enumerate()
+                .step_by(STEP_BY)
+                .map(|(index, el)| (index as f64 * delta_t, el[0])),
+            BLUE.filled(),
+        ))?
+        .label("E");
+
+    chart
+        .draw_series(LineSeries::new(
+            data_b
+                .iter()
+                .enumerate()
+                .step_by(STEP_BY)
+                .map(|(index, el)| (index as f64 * delta_t, el[0])),
+            RED.filled(),
+        ))?
+        .label("B");
+
+    Ok(())
+}
+
 pub fn plot_data_fft(
     data: &[Complex<f64>],
     delta_t: f64,

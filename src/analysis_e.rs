@@ -1,6 +1,5 @@
 use indicatif::{ProgressBar, ProgressStyle};
 use nalgebra::{Complex, ComplexField};
-use once_cell::sync::Lazy;
 use plaquette::io::*;
 use plaquette::plot::{fourier::*, PlotType};
 use rustfft::FftPlanner;
@@ -13,12 +12,14 @@ const BETA: [f64; 11] = [
 
 const DT: f64 = 0.000_01_f64; // prod
 
+/*
 const FFT_RESOLUTION_SIZE: f64 = 0.1_f64;
 static NUMBER_OF_MEASUREMENT: Lazy<usize> =
     Lazy::new(|| ((1_f64 / DT) * 2_f64 / FFT_RESOLUTION_SIZE).ceil() as usize);
 
 const LATTICE_DIM: usize = 24;
 const LATTICE_SIZE: f64 = 1_f64;
+*/
 
 fn main() {
     let pb = ProgressBar::new(BETA.len() as u64);
@@ -56,7 +57,7 @@ fn main() {
             .collect::<Vec<f64>>();
         drop(measure_fft);
 
-        plot_data_fft(
+        plot_data_fft_norm(
             &fft_real,
             DT,
             &format!("data/plot_fft_{}.svg", beta),
