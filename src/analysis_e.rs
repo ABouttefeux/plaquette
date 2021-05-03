@@ -1,6 +1,5 @@
 use indicatif::{ProgressBar, ProgressStyle};
 use nalgebra::{Complex, ComplexField};
-use once_cell::sync::Lazy;
 use plaquette::io::*;
 use plaquette::plot::{fourier::*, PlotType};
 use rustfft::FftPlanner;
