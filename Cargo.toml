@@ -57,3 +57,7 @@ path = "src/corr_b.rs"
 [[bin]]
 name = "cross_check_d3_analysis"
 path = "src/cross_check_d3_analysis.rs"
+
+[[bin]]
+name = "sim_e_and_b"
+path = "src/sim_e_and_b.rs"
