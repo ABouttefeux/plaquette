@@ -10,21 +10,50 @@ publish = false
 
 
 [dependencies]
-nalgebra = { version = "0.26.2", features = ["serde-serialize"] }
 lattice-qcd-rs = {git = "https://github.com/ABouttefeux/lattice-qcd-rs", branch = "develop"}
-rustfft = "5.0.0"
-plotters = "0.3.0"
+nalgebra = { version = "0.26.2", features = ["serde-serialize"] }
+rand = "0.8.3"
+rand_distr = "0.4.0"
+serde = { version = "1.0", features = ["derive"] }
+bincode = "1.3.0"
 csv = "1.1.6"
-serde = { version = "1.0.117", features = ["derive"] }
-once_cell = "1.7.2"
 indicatif = { version = "0.15", features = ["rayon"] }
+plotters = "0.3.0"
+rayon = "1.5"
+serde_json = "1.0"
+rand_xoshiro = { version = "0.6", features = ["serde1"] }
+crossbeam = "0.8.0"
+rustfft = "5.0.0"
+console = "0.14"
+plotter_backend_text = { version = "0.0.0", git = "https://github.com/ABouttefeux/plotter_backend_text", branch = "develop" }
+once_cell = "1.7.2"
 
 
 [profile.release]
-#codegen-units = 1
-#lto = true
+codegen-units = 1
+lto = true
 
 
 [[bin]]
 name = "analysis_e"
 path = "src/analysis_e.rs"
+
+[[bin]]
+name = "cross_check_d4"
+path = "src/cross_check_d4.rs"
+
+[[bin]]
+name = "cross_check_d3"
+path = "src/cross_check_d3.rs"
+
+[[bin]]
+name = "cross_check_e"
+path = "src/cross_check_e.rs"
+
+[[bin]]
+name = "corr_b"
+path = "src/corr_b.rs"
+
+[[bin]]
+name = "cross_check_d3_analysis"
+path = "src/cross_check_d3_analysis.rs"
