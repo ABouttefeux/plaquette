@@ -1,3 +1,5 @@
+//! Binary application to compute the average of the plaquette
+
 //#![warn(clippy::as_conversions)]
 #![warn(clippy::cast_sign_loss)]
 #![warn(clippy::cast_possible_truncation)]
@@ -30,5 +32,14 @@
 
 extern crate nalgebra as na;
 
+pub mod config;
+pub mod config_scan;
+pub mod data_analysis;
 pub mod io;
+pub mod observable;
 pub mod plot;
+pub mod plot_corr_e;
+pub mod rng;
+pub mod sim;
+#[cfg(test)]
+mod test;
