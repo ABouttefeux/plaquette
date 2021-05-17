@@ -63,6 +63,10 @@ name = "sim_e_and_b"
 path = "src/sim_e_and_b.rs"
 
 [[bin]]
+name = "sim_e_and_b_2"
+path = "src/sim_e_and_b_2.rs"
+
+[[bin]]
 name = "cross_check_d3_2"
 path = "src/cross_check_d3_2.rs"
 
