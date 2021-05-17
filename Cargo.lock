@@ -513,7 +513,7 @@ dependencies = [
 [[package]]
 name = "lattice-qcd-rs"
 version = "0.2.0"
-source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#550f4c9ba5f24fd116731983fb5228e86922479d"
+source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#5f7d44ceee6894eb79744da282b489354d4326a2"
 dependencies = [
  "approx 0.4.0",
  "crossbeam",
@@ -529,7 +529,7 @@ dependencies = [
 [[package]]
 name = "lattice_qcd_rs-procedural_macro"
 version = "0.2.0"
-source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#550f4c9ba5f24fd116731983fb5228e86922479d"
+source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#5f7d44ceee6894eb79744da282b489354d4326a2"
 dependencies = [
  "proc-macro2",
  "quote",
