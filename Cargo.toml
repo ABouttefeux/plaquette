@@ -73,3 +73,7 @@ path = "src/cross_check_d3_2.rs"
 [[bin]]
 name = "cross_check_d3_analysis_2"
 path = "src/cross_check_d3_analysis_2.rs"
+
+[[bin]]
+name = "sim_wilson_loop"
+path = "src/sim_wilson_loop.rs"
