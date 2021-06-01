@@ -185,7 +185,7 @@ fn plot_fft(measure: &[[f64; 2]], prefix_type: &str, beta: f64) -> Vec<f64> {
     let _ = plot_data_fft_norm(
         &fft_real,
         DT,
-        &format!("data/plot_{}_fft_{}.svg", prefix_type, beta),
+        &format!("{}/plot_{}_fft_{}.svg", DIRECTORY, prefix_type, beta),
         PlotType::Circle,
     );
 

@@ -148,7 +148,7 @@ fn main_cross_with_e(simulation_index: usize) {
         &fft_b,
         &fft_e,
         DT,
-        &format!("data/plot_e_b_fft_{}.svg", beta),
+        &format!("{}/plot_e_b_fft_{}.svg", DIRECTORY, beta),
         PlotType::Circle,
     );
 
