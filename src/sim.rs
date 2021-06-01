@@ -111,7 +111,7 @@ where
 
     for _ in 0..config.number_of_thermalisation() / config.number_between_renorm() {
         let value = closure(&simulation);
-        pb_th.set_message(&format!("V {:.6}, P {:.2}", value, mc.prob_replace_last()));
+        pb_th.set_message(format!("V {:.6}, P {:.2}", value, mc.prob_replace_last()));
         for _ in 0..config.number_between_renorm() {
             simulation = simulation.monte_carlo_step(&mut mc).unwrap();
         }
@@ -127,7 +127,7 @@ where
 
     for i in 0..config.number_of_averages() {
         for _ in 0..config.number_of_steps_between_average() / config.number_between_renorm() {
-            pb_th.set_message(&format!("A {:.6}, P {:.2}", value, mc.prob_replace_last()));
+            pb_th.set_message(format!("A {:.6}, P {:.2}", value, mc.prob_replace_last()));
             for _ in 0..config.number_between_renorm() {
                 simulation = simulation.monte_carlo_step(&mut mc).unwrap();
             }
@@ -182,7 +182,7 @@ where
             .progress_chars("=>-")
             .template(get_pb_template()),
     );
-    pb_th.set_prefix(&format!(
+    pb_th.set_prefix(format!(
         "T - est - {} {}",
         inital_state.lattice().dim(),
         sufix
@@ -229,7 +229,7 @@ where
         }
 
         let mean = statistics::mean(&vec);
-        pb_th.set_message(&format!("{:.6}", mean));
+        pb_th.set_message(format!("{:.6}", mean));
         if Sign::sign(mean) != sign {
             break;
         }
@@ -264,7 +264,7 @@ where
             let last_auto_corr = statistics::covariance(&init_vec, &vec).unwrap().abs();
             t_exp += last_auto_corr / init_auto_corr;
             pb_th.inc(1);
-            pb_th.set_message(&format!(
+            pb_th.set_message(format!(
                 "{:.2}, {:.6}",
                 t_exp,
                 last_auto_corr / init_auto_corr
@@ -321,7 +321,7 @@ where
             .progress_chars("=>-")
             .template(get_pb_template()),
     );
-    pb.set_prefix(&format!("sim - {}", inital_state.lattice().dim()));
+    pb.set_prefix(format!("sim - {}", inital_state.lattice().dim()));
 
     let mut state = inital_state;
     let mut vec = Vec::with_capacity(number_of_measurement);
@@ -394,7 +394,7 @@ where
             .progress_chars("=>-")
             .template(get_pb_template()),
     );
-    pb.set_prefix(&format!("th - e"));
+    pb.set_prefix(format!("th - e"));
 
     let mut hmc = HybridMonteCarloDiagnostic::new(dt, STEPS, INTEGRATOR, rng);
 
@@ -402,7 +402,7 @@ where
     for _ in 0..CYCLE {
         state = state.monte_carlo_step(&mut hmc)?;
         state.normalize_link_matrices();
-        pb.set_message(&format!("{:.6}   ", hmc.prob_replace_last()));
+        pb.set_message(format!("{:.6}   ", hmc.prob_replace_last()));
         pb.inc(1);
     }
 

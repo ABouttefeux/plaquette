@@ -123,7 +123,7 @@ where
             simulation.normalize_link_matrices();
         }
         let average = simulation.average_trace_plaquette().unwrap().real();
-        pb.set_message(&format!("{}", average));
+        pb.set_message(format!("{}", average));
         pb.inc(sub_block);
     }
     pb.finish();
@@ -174,7 +174,7 @@ where
                 pb.inc(1);
             }
             simulation.normalize_link_matrices();
-            pb.set_message(&closure_message(&simulation, mc));
+            pb.set_message(closure_message(&simulation, mc));
         }
     }
 
