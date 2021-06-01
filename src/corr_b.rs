@@ -161,7 +161,7 @@ fn measure(
             .progress_chars("=>-")
             .template(get_pb_template()),
     );
-    pb.set_prefix(&format!("simulating"));
+    pb.set_prefix(format!("simulating"));
 
     let mut state = state_initial.clone();
     let points = state
@@ -184,7 +184,7 @@ fn measure(
     for i in 0..number_of_measurement {
         let mut state_new = state.simulate_symplectic(&INTEGRATOR, DT)?;
         if i % 200 == 0 {
-            pb.set_message(&format!(
+            pb.set_message(format!(
                 "H {:.6} - G {:.6} ",
                 state_new.get_hamiltonian_total(),
                 state_new
