@@ -1,7 +1,7 @@
 use lattice_qcd_rs::{
-    lattice::{Direction, DirectionList, LatticePoint},
+    lattice::{Direction, DirectionList, LatticeLink, LatticePoint},
     simulation::*,
-    ComplexField,
+    CMatrix3, ComplexField,
 };
 use rayon::prelude::*;
 
@@ -98,4 +98,42 @@ pub fn b_correletor(
             .sum::<f64>()
             / (3_f64),
     )
+}
+
+fn classical_wilson_loop_matrix<State, const D: usize>(
+    state_zero: &State,
+    state_new: &State,
+    pt: LatticePoint<D>,
+    dir: &Direction<D>,
+    spacing: usize,
+) -> Option<CMatrix3>
+where
+    State: LatticeState<D>,
+{
+    let mut pt = pt;
+    let mut left_product = CMatrix3::identity();
+    let mut right_product = CMatrix3::identity();
+    for _ in 0..spacing {
+        left_product *= state_zero
+            .link_matrix()
+            .get_matrix(&LatticeLink::new(pt, *dir), state_zero.lattice())?;
+        right_product *= state_new
+            .link_matrix()
+            .get_matrix(&LatticeLink::new(pt, -dir), state_zero.lattice())?;
+        pt = state_zero.lattice().add_point_direction(pt, dir);
+    }
+    Some(left_product * right_product.adjoint())
+}
+
+pub fn classical_wilson_loop<State, const D: usize>(
+    state_zero: &State,
+    state_new: &State,
+    pt: LatticePoint<D>,
+    dir: &Direction<D>,
+    spacing: usize,
+) -> Option<nalgebra::Complex<f64>>
+where
+    State: LatticeState<D>,
+{
+    Some(classical_wilson_loop_matrix(state_zero, state_new, pt, dir, spacing)?.trace())
 }

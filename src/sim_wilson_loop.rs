@@ -1,42 +1,35 @@
-use std::env;
 use std::fs;
 
 //use plotter_backend_text::*;
 //use plotters::prelude::*;
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
 use lattice_qcd_rs::{
-    error::StateInitializationError, integrator::SymplecticEulerRayon, lattice::LatticePoint,
-    simulation::*, statistics, ComplexField,
+    error::StateInitializationError, integrator::SymplecticEulerRayon, simulation::*, statistics,
 };
 use nalgebra::Complex;
 use once_cell::sync::Lazy;
-use plaquette::plot::{fourier::*, PlotType};
-use plaquette::{config::*, data_analysis::*, observable, plot_corr_e::*, rng::*, sim::*};
+use plaquette::{config::*, data_analysis::*, observable, rng::*, sim::*};
 use rayon::prelude::*;
-use rustfft::FftPlanner;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    let index = args[1].parse().unwrap();
-    println!("Simulate for beta = {}", BETA[index]);
-    main_cross_with_e(index);
+    main_sim();
 }
 
-const DIRECTORY: &str = &"data/data_set_e_b_2/";
+const DIRECTORY: &str = &"data/data_set_wilson_loop/";
 
-const BETA: [f64; 11] = [
-    1_f64, 3_f64, 6_f64, 9_f64, 12_f64, 15_f64, 18_f64, 21_f64, 24_f64, 27_f64, 30_f64,
-];
+const BETA: f64 = 16_f64;
 //const CF: f64 = 1.333_333_333_333_333_3_f64; // = (Nc^2-1)/(2 * Nc) = 4/3
 //const DT: f64 = 0.000_1_f64; // test
 const DT: f64 = 0.000_01_f64; // prod
 
-const FFT_RESOLUTION_SIZE: f64 = 0.1_f64;
-static NUMBER_OF_MEASUREMENT: Lazy<usize> = Lazy::new(|| {
-    ((1_f64 / DT) * 2_f64 / FFT_RESOLUTION_SIZE * (2_f64 * std::f64::consts::PI)).ceil() as usize
-});
+const MAXT_IME: f64 = 50_f64;
+static NUMBER_OF_MEASUREMENT: Lazy<usize> =
+    Lazy::new(|| (MAXT_IME / DT / LATTICE_SIZE).ceil() as usize);
 
-const LATTICE_DIM: usize = 16;
+const SPACING_LEN: usize = 4;
+const SPACING: [usize; SPACING_LEN] = [1, 2, 3, 4];
+
+const LATTICE_DIM: usize = 12;
 //const LATTICE_DIM: usize = 24;
 //const LATTICE_DIM: usize = 8;
 const LATTICE_SIZE: f64 = 1_f64;
@@ -44,13 +37,12 @@ const LATTICE_SIZE: f64 = 1_f64;
 const INTEGRATOR: SymplecticEulerRayon = SymplecticEulerRayon::new();
 const SEED: u64 = 0x06_60_e9_e5_f5_27_9a_7c;
 
-fn main_cross_with_e(simulation_index: usize) {
+fn main_sim() {
     fs::create_dir_all(DIRECTORY).unwrap();
-    let beta = BETA[simulation_index];
     let cfg_l = LatticeConfig::new(
         LATTICE_SIZE, //size
         LATTICE_DIM,  // dim
-        beta,         // Beta
+        BETA,         // Beta
     )
     .unwrap();
     let mc_cfg = MonteCarloConfig::new(1, 0.1).unwrap();
@@ -82,9 +74,6 @@ fn main_cross_with_e(simulation_index: usize) {
     pb.tick();
 
     let mut rng = get_rand_from_seed(SEED);
-    for _ in 0..simulation_index {
-        rng.jump();
-    }
     let sim_init = generate_state_default(cfg.lattice_config(), &mut rng);
     let mut mc = get_mc_from_config_sweep(cfg.sim_config().mc_config(), rng);
     /*
@@ -103,7 +92,7 @@ fn main_cross_with_e(simulation_index: usize) {
         &multi_pb,
         &observable::volume_obs,
         DIRECTORY,
-        &format!("ecorr_{}", beta),
+        &format!("ecorr_{}", BETA),
     )
     .unwrap();
     let (state, _rng) = thermalize_with_e_field(sim_th, &multi_pb, mc.rng_owned(), DT).unwrap();
@@ -111,45 +100,17 @@ fn main_cross_with_e(simulation_index: usize) {
     // we may want to do one simulation step to remove the big jump at the begining
     //let state = state.simulate_symplectic(&INTEGRATOR, DT).unwrap();
 
-    let _ = save_data_any(&state, &format!("{}/sim_bin_{}_th_e.bin", DIRECTORY, beta));
-    let (state, measure_e, measure_b) = measure(state, *NUMBER_OF_MEASUREMENT, &multi_pb).unwrap();
+    let _ = save_data_any(&state, &format!("{}/sim_bin_{}_th_e.bin", DIRECTORY, BETA));
+    let (state, res) = measure(state, *NUMBER_OF_MEASUREMENT, &multi_pb).unwrap();
 
-    let _ = save_data_any(&state, &format!("{}/sim_bin_{}_e.bin", DIRECTORY, beta));
+    let _ = save_data_any(&state, &format!("{}/sim_bin_{}_e.bin", DIRECTORY, BETA));
     let _ = write_vec_to_file_csv(
-        &measure_e,
-        &format!("{}/mean_measures_corr_e_{}.csv", DIRECTORY, beta),
+        &res,
+        &format!("{}/mean_measures_wl_{}.csv", DIRECTORY, BETA),
     );
     let _ = write_vec_to_file_csv(
-        &measure_b,
-        &format!("{}/mean_measures_corr_b_{}.csv", DIRECTORY, beta),
-    );
-    let _ = plot_data(
-        &measure_e,
-        DT,
-        &format!("{}/e_corr_{}.svg", DIRECTORY, beta),
-    );
-    let _ = plot_data(
-        &measure_b,
-        DT,
-        &format!("{}/b_corr_{}.svg", DIRECTORY, beta),
-    );
-
-    let _ = plot_data_e_and_b(
-        &measure_e,
-        &measure_b,
-        DT,
-        &format!("{}/e_b_corr_{}.svg", DIRECTORY, beta),
-    );
-
-    let fft_e = plot_fft(&measure_e, &"e", beta);
-    let fft_b = plot_fft(&measure_b, &"b", beta);
-
-    let _ = plot_data_fft_norm_e_and_b(
-        &fft_b,
-        &fft_e,
-        DT,
-        &format!("data/plot_e_b_fft_{}.svg", beta),
-        PlotType::Circle,
+        &[SPACING],
+        &format!("{}/mean_measures_wl_{}_info.csv", DIRECTORY, BETA),
     );
 
     pb.inc(1);
@@ -158,44 +119,9 @@ fn main_cross_with_e(simulation_index: usize) {
     let _ = h.join();
 }
 
-fn plot_fft(measure: &[[f64; 2]], prefix_type: &str, beta: f64) -> Vec<f64> {
-    let mut measure_fft = measure
-        .iter()
-        .map(|el| el[0].into())
-        .collect::<Vec<Complex<f64>>>();
-
-    let mut planner = FftPlanner::new();
-    let fft = planner.plan_fft_forward(measure_fft.len());
-
-    fft.process(&mut measure_fft);
-    let _ = plot_data_fft(
-        &measure_fft[..measure_fft.len() / 2],
-        DT,
-        &format!("{}/{}_corr_{}_fft.svg", prefix_type, DIRECTORY, beta),
-    );
-
-    // Why / 2 ?
-    let normalization_fact = ((measure_fft.len() / 2) as f64).sqrt();
-    let fft_real = measure_fft
-        .iter()
-        .take(measure_fft.len() / 2)
-        .map(|val| (2_f64 * val.real()) / normalization_fact)
-        .collect::<Vec<f64>>();
-
-    let _ = plot_data_fft_norm(
-        &fft_real,
-        DT,
-        &format!("{}/plot_{}_fft_{}.svg", DIRECTORY, prefix_type, beta),
-        PlotType::Circle,
-    );
-
-    fft_real
-}
-
 type ResultMeasure = (
     LatticeStateWithEFieldSyncDefault<LatticeStateDefault<3>, 3>,
-    Vec<[f64; 2]>,
-    Vec<[f64; 2]>,
+    Vec<[[Complex<f64>; 2]; SPACING_LEN]>,
 );
 
 #[allow(clippy::useless_format)]
@@ -213,28 +139,26 @@ fn measure(
     pb.set_prefix(&format!("simulating"));
 
     let mut state = state_initial.clone();
-    let points = state
-        .lattice()
-        .get_points()
-        .collect::<Vec<LatticePoint<3>>>();
+    let links = state.lattice().get_links().collect::<Vec<_>>();
 
-    let mut vec_e = Vec::with_capacity(number_of_measurement + 1);
-    let mut vec_b = Vec::with_capacity(number_of_measurement + 1);
+    let mut vec_res = Vec::with_capacity(number_of_measurement + 1);
 
-    let vec_data_e = statistics::mean_and_variance_par_iter_val(
-        points
-            .par_iter()
-            .map(|pt| observable::e_correletor(&state_initial, &state_initial, pt).unwrap()),
-    );
-    vec_e.push(vec_data_e);
-
-    let vec_data_b = statistics::mean_and_variance_par_iter_val(
-        points
-            .par_iter()
-            .map(|pt| observable::b_correletor(&state_initial, &state_initial, pt).unwrap()),
-    );
-    vec_b.push(vec_data_b);
-
+    {
+        let mut array_data = [[Complex::from(0_f64); 2]; 4];
+        for (index, data) in array_data.iter_mut().enumerate() {
+            *data = statistics::mean_and_variance_par_iter_val(links.par_iter().map(|link| {
+                observable::classical_wilson_loop(
+                    &state_initial,
+                    &state_initial,
+                    *link.pos(),
+                    link.dir(),
+                    SPACING[index],
+                )
+                .unwrap()
+            }));
+        }
+        vec_res.push(array_data);
+    }
     //let mut vec_plot = vec![];
     //let mut y_min = 0_f64;
     //let mut y_max = 0_f64;
@@ -261,20 +185,20 @@ fn measure(
             */
         }
 
-        let vec_data_e = statistics::mean_and_variance_par_iter_val(
-            points
-                .par_iter()
-                .map(|pt| observable::e_correletor(&state_initial, &state_new, pt).unwrap()),
-        );
-        vec_e.push(vec_data_e);
-
-        let vec_data_b = statistics::mean_and_variance_par_iter_val(
-            points
-                .par_iter()
-                .map(|pt| observable::b_correletor(&state_initial, &state_new, pt).unwrap()),
-        );
-        vec_b.push(vec_data_b);
-
+        let mut array_data = [[Complex::from(0_f64); 2]; 4];
+        for (index, data) in array_data.iter_mut().enumerate() {
+            *data = statistics::mean_and_variance_par_iter_val(links.par_iter().map(|link| {
+                observable::classical_wilson_loop(
+                    &state_initial,
+                    &state_new,
+                    *link.pos(),
+                    link.dir(),
+                    SPACING[index],
+                )
+                .unwrap()
+            }));
+        }
+        vec_res.push(array_data);
         /*
         const PLOT_COUNT: usize = 1_000;
         if i % PLOT_COUNT == 0 {
@@ -308,5 +232,5 @@ fn measure(
 
     pb.finish_and_clear();
     let _ = console::Term::stderr().move_cursor_down(30);
-    Ok((state, vec_e, vec_b))
+    Ok((state, vec_res))
 }

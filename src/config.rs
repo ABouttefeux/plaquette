@@ -21,9 +21,9 @@ impl LatticeConfig {
             return None;
         }
         Some(Self {
-            lattice_size,
-            lattice_number_of_points,
             lattice_beta,
+            lattice_number_of_points,
+            lattice_size,
         })
     }
 
@@ -65,11 +65,11 @@ impl SimConfig {
         }
         else {
             Some(Self {
-                mc_config,
                 number_of_thermalisation,
                 number_between_renorm,
                 number_of_averages,
                 number_of_steps_between_average,
+                mc_config,
             })
         }
     }
