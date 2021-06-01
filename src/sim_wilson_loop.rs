@@ -108,6 +108,10 @@ fn main_sim() {
         &res,
         &format!("{}/mean_measures_wl_{}.csv", DIRECTORY, BETA),
     );
+    let _ = write_vec_to_file_csv(
+        &[SPACING],
+        &format!("{}/mean_measures_wl_{}_info.csv", DIRECTORY, BETA),
+    );
 
     pb.inc(1);
 
