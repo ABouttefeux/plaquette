@@ -148,7 +148,7 @@ fn main_cross_with_e(simulation_index: usize) {
         &fft_b,
         &fft_e,
         DT,
-        &format!("data/plot_e_b_fft_{}.svg", beta),
+        &format!("{}/plot_e_b_fft_{}.svg", DIRECTORY, beta),
         PlotType::Circle,
     );
 
@@ -171,7 +171,7 @@ fn plot_fft(measure: &[[f64; 2]], prefix_type: &str, beta: f64) -> Vec<f64> {
     let _ = plot_data_fft(
         &measure_fft[..measure_fft.len() / 2],
         DT,
-        &format!("{}/{}_corr_{}_fft.svg", prefix_type, DIRECTORY, beta),
+        &format!("{}/{}_corr_{}_fft.svg", DIRECTORY, prefix_type, beta),
     );
 
     // Why / 2 ?
