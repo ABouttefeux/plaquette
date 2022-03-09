@@ -659,7 +659,7 @@ checksum = "476d1d59fe02fe54c86356e91650cd892f392782a1cb9fc524ec84f7aa9e1d06"
 dependencies = [
  "approx",
  "matrixmultiply",
- "num-complex",
+ "num-complex 0.3.1",
  "num-rational 0.3.2",
  "num-traits",
  "serde",
@@ -675,6 +675,15 @@ checksum = "747d632c0c558b87dbabbe6a82f3b4ae03720d0646ac5b7b4dae89394be5f2c5"
 dependencies = [
  "num-traits",
  "serde",
+]
+
+[[package]]
+name = "num-complex"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "26873667bbbb7c5182d4a37c1add32cdf09f841af72da53318fdb81543c15085"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]
@@ -1062,11 +1071,11 @@ dependencies = [
 
 [[package]]
 name = "rustfft"
-version = "5.1.1"
+version = "6.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1869bb2a6ff77380d52ff4bc631f165637035a55855c76aa462c85474dadc42f"
+checksum = "b1d089e5c57521629a59f5f39bca7434849ff89bd6873b521afe389c1c602543"
 dependencies = [
- "num-complex",
+ "num-complex 0.4.0",
  "num-integer",
  "num-traits",
  "primal-check",
@@ -1169,7 +1178,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5132a955559188f3d13c9ba831e77c802ddc8782783f050ed0c52f5988b95f4c"
 dependencies = [
  "approx",
- "num-complex",
+ "num-complex 0.3.1",
  "num-traits",
  "paste",
 ]
