@@ -1,0 +1,16 @@
+var N = null;var sourcesIndex = {};
+sourcesIndex["analysis_e"] = {"name":"","files":["analysis_e.rs"]};
+sourcesIndex["analysis_eb_2"] = {"name":"","files":["analysis_eb_2.rs"]};
+sourcesIndex["corr_b"] = {"name":"","files":["corr_b.rs"]};
+sourcesIndex["cross_check_d3"] = {"name":"","files":["cross_check_d3.rs"]};
+sourcesIndex["cross_check_d3_2"] = {"name":"","files":["cross_check_d3_2.rs"]};
+sourcesIndex["cross_check_d3_analysis"] = {"name":"","files":["cross_check_d3_analysis.rs"]};
+sourcesIndex["cross_check_d3_analysis_2"] = {"name":"","files":["cross_check_d3_analysis_2.rs"]};
+sourcesIndex["cross_check_d4"] = {"name":"","files":["cross_check_d4.rs"]};
+sourcesIndex["cross_check_e"] = {"name":"","files":["cross_check_e.rs"]};
+sourcesIndex["plaquette"] = {"name":"","dirs":[{"name":"plot","files":["fourier.rs","mod.rs"]}],"files":["config.rs","config_scan.rs","data_analysis.rs","io.rs","lib.rs","observable.rs","plot_corr_e.rs","rng.rs","sim.rs"]};
+sourcesIndex["sim_e_and_b"] = {"name":"","files":["sim_e_and_b.rs"]};
+sourcesIndex["sim_e_and_b_2"] = {"name":"","files":["sim_e_and_b_2.rs"]};
+sourcesIndex["sim_wilson_loop"] = {"name":"","files":["sim_wilson_loop.rs"]};
+sourcesIndex["simulation_bin"] = {"name":"","files":["main.rs"]};
+createSourceSidebar();

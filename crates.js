@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["analysis_e","analysis_eb_2","corr_b","cross_check_d3","cross_check_d3_2","cross_check_d3_analysis","cross_check_d3_analysis_2","cross_check_d4","cross_check_e","plaquette","sim_e_and_b","sim_e_and_b_2","sim_wilson_loop","simulation_bin"];

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["b_correletor",""],["classical_wilson_loop",""],["e_correletor",""],["parameter_volume",""],["volume_obs",""],["volume_obs_mean",""]]});

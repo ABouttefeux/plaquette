@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["BETA",""],["DIRECTORY",""],["DT",""],["FFT_RESOLUTION_SIZE",""],["INTEGRATOR",""],["LATTICE_DIM",""],["LATTICE_SIZE",""],["SEED",""]],"fn":[["main",""],["main_cross_with_e",""],["measure",""],["plot_fft",""]],"static":[["NUMBER_OF_MEASUREMENT",""]],"type":[["ResultMeasure",""]]});

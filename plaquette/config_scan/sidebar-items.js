@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ScanPossibility","Type that either contain a default value of a vector of values"]],"struct":[["ConfigScan",""],["LatticeConfigScan","Scan over `LatticeConfig`"],["MonteCarloConfigScan",""],["SimConfigScan",""]]});
