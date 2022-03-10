@@ -18,6 +18,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "approx"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cab112f0a86d568ea0e627cc1d6be74a1e9cd55214684db5561995f6dad897c6"
+dependencies = [
+ "num-traits",
+]
+
+[[package]]
 name = "autocfg"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -546,12 +555,12 @@ dependencies = [
 [[package]]
 name = "lattice-qcd-rs"
 version = "0.2.0"
-source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#a936b222add61c34dfd71211a539cc8e0feee8e6"
+source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#488c70e2067222fb283f04ee2ce63acde6a60472"
 dependencies = [
- "approx",
+ "approx 0.5.1",
  "crossbeam",
  "lattice_qcd_rs-procedural_macro",
- "nalgebra",
+ "nalgebra 0.30.1",
  "num-traits",
  "rand",
  "rand_distr",
@@ -562,7 +571,7 @@ dependencies = [
 [[package]]
 name = "lattice_qcd_rs-procedural_macro"
 version = "0.2.0"
-source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#a936b222add61c34dfd71211a539cc8e0feee8e6"
+source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#488c70e2067222fb283f04ee2ce63acde6a60472"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -641,14 +650,42 @@ version = "0.26.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "476d1d59fe02fe54c86356e91650cd892f392782a1cb9fc524ec84f7aa9e1d06"
 dependencies = [
- "approx",
+ "approx 0.4.0",
  "matrixmultiply",
- "num-complex",
+ "num-complex 0.3.1",
  "num-rational 0.3.2",
  "num-traits",
  "serde",
- "simba",
+ "simba 0.4.0",
  "typenum",
+]
+
+[[package]]
+name = "nalgebra"
+version = "0.30.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4fb2d0de08694bed883320212c18ee3008576bfe8c306f4c3c4a58b4876998be"
+dependencies = [
+ "approx 0.5.1",
+ "matrixmultiply",
+ "nalgebra-macros",
+ "num-complex 0.4.0",
+ "num-rational 0.4.0",
+ "num-traits",
+ "serde",
+ "simba 0.7.1",
+ "typenum",
+]
+
+[[package]]
+name = "nalgebra-macros"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "01fcc0b8149b4632adc89ac3b7b31a12fb6099a0317a4eb2ebff574ef7de7218"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -656,6 +693,16 @@ name = "num-complex"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "747d632c0c558b87dbabbe6a82f3b4ae03720d0646ac5b7b4dae89394be5f2c5"
+dependencies = [
+ "num-traits",
+ "serde",
+]
+
+[[package]]
+name = "num-complex"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "26873667bbbb7c5182d4a37c1add32cdf09f841af72da53318fdb81543c15085"
 dependencies = [
  "num-traits",
  "serde",
@@ -698,6 +745,17 @@ name = "num-rational"
 version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "12ac428b1cb17fce6f731001d307d351ec70a6d202fc2e60f7d4c5e42d8f4f07"
+dependencies = [
+ "autocfg",
+ "num-integer",
+ "num-traits",
+]
+
+[[package]]
+name = "num-rational"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d41702bd167c2df5520b384281bc111a4b5efcf7fbc4c9c222c815b07e0a6a6a"
 dependencies = [
  "autocfg",
  "num-integer",
@@ -777,7 +835,7 @@ dependencies = [
  "csv",
  "indicatif",
  "lattice-qcd-rs",
- "nalgebra",
+ "nalgebra 0.26.2",
  "once_cell",
  "plotter_backend_text",
  "plotters",
@@ -1050,7 +1108,7 @@ version = "5.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1869bb2a6ff77380d52ff4bc631f165637035a55855c76aa462c85474dadc42f"
 dependencies = [
- "num-complex",
+ "num-complex 0.3.1",
  "num-integer",
  "num-traits",
  "primal-check",
@@ -1063,6 +1121,15 @@ name = "ryu"
 version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "71d301d4193d031abdd79ff7e3dd721168a9572ef3fe51a1517aba235bd8f86e"
+
+[[package]]
+name = "safe_arch"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "794821e4ccb0d9f979512f9c1973480123f9bd62a90d74ab0f9426fcf8f4a529"
+dependencies = [
+ "bytemuck",
+]
 
 [[package]]
 name = "same-file"
@@ -1152,10 +1219,23 @@ version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5132a955559188f3d13c9ba831e77c802ddc8782783f050ed0c52f5988b95f4c"
 dependencies = [
- "approx",
- "num-complex",
+ "approx 0.4.0",
+ "num-complex 0.3.1",
  "num-traits",
  "paste",
+]
+
+[[package]]
+name = "simba"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "13a2609e876d4f77f6ab7ff5254fc39b4f1927ba8e6db3d18be7c32534d3725e"
+dependencies = [
+ "approx 0.5.1",
+ "num-complex 0.4.0",
+ "num-traits",
+ "paste",
+ "wide",
 ]
 
 [[package]]
@@ -1166,7 +1246,7 @@ dependencies = [
  "dialoguer",
  "indicatif",
  "lattice-qcd-rs",
- "nalgebra",
+ "nalgebra 0.26.2",
  "rand",
  "rand_distr",
  "rand_xoshiro",
@@ -1338,6 +1418,16 @@ checksum = "e828417b379f3df7111d3a2a9e5753706cae29c41f7c4029ee9fd77f3e09e582"
 dependencies = [
  "js-sys",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "wide"
+version = "0.7.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b3aba2d1dac31ac7cae82847ac5b8be822aee8f99a4e100f279605016b185c5f"
+dependencies = [
+ "bytemuck",
+ "safe_arch",
 ]
 
 [[package]]
