@@ -525,7 +525,7 @@ dependencies = [
 [[package]]
 name = "lattice-qcd-rs"
 version = "0.2.0"
-source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#488c70e2067222fb283f04ee2ce63acde6a60472"
+source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#8a7f83b968fa8f5be36fa1ec5fc97738eb16d422"
 dependencies = [
  "approx",
  "crossbeam",
@@ -541,7 +541,7 @@ dependencies = [
 [[package]]
 name = "lattice_qcd_rs-procedural_macro"
 version = "0.2.0"
-source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#488c70e2067222fb283f04ee2ce63acde6a60472"
+source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#8a7f83b968fa8f5be36fa1ec5fc97738eb16d422"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -877,9 +877,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.15"
+version = "1.0.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "864d3e96a899863136fc6e99f3d7cae289dafe43bf2c5ac19b70df7210c0a145"
+checksum = "632d02bff7f874a36f33ea8bb416cd484b90cc66c1194b1a1110d067a7013f58"
 dependencies = [
  "proc-macro2",
 ]
@@ -1174,9 +1174,9 @@ checksum = "a3ff2f71c82567c565ba4b3009a9350a96a7269eaa4001ebedae926230bc2254"
 
 [[package]]
 name = "syn"
-version = "1.0.86"
+version = "1.0.91"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a65b3f4ffa0092e9887669db0eae07941f023991ab58ea44da8fe8e2d511c6b"
+checksum = "b683b2b825c8eef438b77c36a06dc262294da3d5a5813fac20da149241dcd44d"
 dependencies = [
  "proc-macro2",
  "quote",
