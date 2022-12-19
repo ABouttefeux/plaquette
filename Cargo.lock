@@ -963,7 +963,7 @@ dependencies = [
 [[package]]
 name = "plotter_backend_text"
 version = "0.0.0"
-source = "git+https://github.com/ABouttefeux/plotter_backend_text?branch=develop#7110fcfec81f602201807a8c543be6fe1ab71418"
+source = "git+https://github.com/ABouttefeux/plotter_backend_text?branch=develop#262a4b358863a4fc41122a1b16d3dbbbe48901d0"
 dependencies = [
  "plotters",
  "plotters-backend",
