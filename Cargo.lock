@@ -655,13 +655,13 @@ dependencies = [
 
 [[package]]
 name = "lattice-qcd-rs"
-version = "0.2.0"
-source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#488c70e2067222fb283f04ee2ce63acde6a60472"
+version = "0.2.1"
+source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#a30df19c1efae40e8193d33315ea28b7dd5463c9"
 dependencies = [
  "approx",
  "crossbeam",
  "lattice_qcd_rs-procedural_macro",
- "nalgebra 0.30.1",
+ "nalgebra",
  "num-traits",
  "rand",
  "rand_distr",
@@ -671,8 +671,8 @@ dependencies = [
 
 [[package]]
 name = "lattice_qcd_rs-procedural_macro"
-version = "0.2.0"
-source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#488c70e2067222fb283f04ee2ce63acde6a60472"
+version = "0.2.1"
+source = "git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop#a30df19c1efae40e8193d33315ea28b7dd5463c9"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -769,23 +769,6 @@ dependencies = [
 
 [[package]]
 name = "nalgebra"
-version = "0.30.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4fb2d0de08694bed883320212c18ee3008576bfe8c306f4c3c4a58b4876998be"
-dependencies = [
- "approx",
- "matrixmultiply",
- "nalgebra-macros",
- "num-complex",
- "num-rational 0.4.0",
- "num-traits",
- "serde",
- "simba",
- "typenum",
-]
-
-[[package]]
-name = "nalgebra"
 version = "0.31.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "20bd243ab3dbb395b39ee730402d2e5405e448c75133ec49cc977762c4cba3d1"
@@ -867,9 +850,9 @@ dependencies = [
 
 [[package]]
 name = "num-traits"
-version = "0.2.14"
+version = "0.2.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a64b1ec5cda2586e284722486d802acf1f7dbdc623e2bfc57e65ca1cd099290"
+checksum = "578ede34cf02f8924ab9447f50c28075b4d3e5b269972345e7e0372b38c6cdcd"
 dependencies = [
  "autocfg",
  "libm",
@@ -947,7 +930,7 @@ dependencies = [
  "csv",
  "indicatif",
  "lattice-qcd-rs",
- "nalgebra 0.31.4",
+ "nalgebra",
  "once_cell",
  "plotter_backend_text",
  "plotters",
@@ -1065,9 +1048,9 @@ dependencies = [
 
 [[package]]
 name = "quote"
-version = "1.0.15"
+version = "1.0.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "864d3e96a899863136fc6e99f3d7cae289dafe43bf2c5ac19b70df7210c0a145"
+checksum = "8856d8364d252a14d474036ea1358d63c9e6965c8e5c1885c18f73d70bff9c7b"
 dependencies = [
  "proc-macro2",
 ]
@@ -1328,7 +1311,7 @@ dependencies = [
  "dialoguer",
  "indicatif",
  "lattice-qcd-rs",
- "nalgebra 0.31.4",
+ "nalgebra",
  "rand",
  "rand_distr",
  "rand_xoshiro",
