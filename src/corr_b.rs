@@ -145,13 +145,13 @@ fn main_cross_with_e(simulation_index: usize) {
 }
 
 type ResultMeasure = (
-    LatticeStateWithEFieldSyncDefault<LatticeStateDefault<3>, 3>,
+    LatticeStateEFSyncDefault<LatticeStateDefault<3>, 3>,
     Vec<[f64; 2]>,
 );
 
 #[allow(clippy::useless_format)]
 fn measure(
-    state_initial: LatticeStateWithEFieldSyncDefault<LatticeStateDefault<3>, 3>,
+    state_initial: LatticeStateEFSyncDefault<LatticeStateDefault<3>, 3>,
     number_of_measurement: usize,
     mp: &MultiProgress,
 ) -> Result<ResultMeasure, StateInitializationError> {
@@ -186,10 +186,10 @@ fn measure(
         if i % 200 == 0 {
             pb.set_message(format!(
                 "H {:.6} - G {:.6} ",
-                state_new.get_hamiltonian_total(),
+                state_new.hamiltonian_total(),
                 state_new
                     .e_field()
-                    .get_gauss_sum_div(state_new.link_matrix(), state_new.lattice())
+                    .gauss_sum_div(state_new.link_matrix(), state_new.lattice())
                     .unwrap(),
             ));
             state_new.lattice_state_mut().normalize_link_matrices();

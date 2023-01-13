@@ -24,7 +24,7 @@ pub fn generate_state_default<Rng: rand::Rng, const D: usize>(
     cfg: &LatticeConfig,
     rng: &mut Rng,
 ) -> LatticeStateDefault<D> {
-    LatticeStateDefault::new_deterministe(
+    LatticeStateDefault::new_determinist(
         cfg.lattice_size(),
         cfg.lattice_beta(),
         cfg.lattice_number_of_points(),
@@ -208,7 +208,7 @@ where
         .par_iter()
         .map(|el| observable(el, &state))
         .sum::<f64>();
-    let sign = Sign::sign(measurement_val - measurement_val_init);
+    let sign = Sign::sign_f64(measurement_val - measurement_val_init);
     if sign == Sign::Zero {
         return Err(ThermalisationSimumlationError::SignObsZero);
     }
@@ -230,7 +230,7 @@ where
 
         let mean = statistics::mean(&vec);
         pb_th.set_message(format!("{:.6}", mean));
-        if Sign::sign(mean) != sign {
+        if Sign::sign_f64(mean) != sign {
             break;
         }
         pb_th.set_length(pb_th.length() + NUMBER_OF_MEASURE_COMPUTE as u64);
@@ -366,10 +366,8 @@ impl From<StateInitializationError> for ThermalizeError {
     }
 }
 
-pub type ResultThermalizeE<Rng, const D: usize> = (
-    LatticeStateWithEFieldSyncDefault<LatticeStateDefault<D>, D>,
-    Rng,
-);
+pub type ResultThermalizeE<Rng, const D: usize> =
+    (LatticeStateEFSyncDefault<LatticeStateDefault<D>, D>, Rng);
 
 const INTEGRATOR: SymplecticEulerRayon = SymplecticEulerRayon::new();
 
@@ -407,7 +405,7 @@ where
     }
 
     let mut rng = hmc.rng_owned();
-    let state_with_e = LatticeStateWithEFieldSyncDefault::new_random_e(
+    let state_with_e = LatticeStateEFSyncDefault::new_random_e(
         state.lattice().clone(),
         state.beta(),
         state.link_matrix_owned(),

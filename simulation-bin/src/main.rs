@@ -93,7 +93,7 @@ fn generate_state_with_logs<const D: usize>(rng: &mut impl rand::Rng) -> Lattice
     spinner.set_prefix("Generating");
     spinner.tick();
     spinner.enable_steady_tick(200);
-    let simulation = LatticeStateDefault::new_deterministe(size, beta, number_of_pts, rng).unwrap();
+    let simulation = LatticeStateDefault::new_determinist(size, beta, number_of_pts, rng).unwrap();
     //let simulation = LatticeStateDefault::new_cold(size, beta, number_of_pts).unwrap();
     spinner.finish();
     simulation
@@ -359,7 +359,7 @@ fn sim_dmh_hmc() {
         .map(|point| {
             simulation
                 .link_matrix()
-                .get_pij(
+                .pij(
                     &point,
                     &Direction::<3>::positive_directions()[0],
                     &Direction::positive_directions()[1],
@@ -384,7 +384,7 @@ fn sim_dmh_hmc() {
                 .par_bridge()
                 .map(|point| {
                     sim.link_matrix()
-                        .get_pij(
+                        .pij(
                             &point,
                             &Direction::<3>::positive_directions()[0],
                             &Direction::positive_directions()[1],
@@ -396,7 +396,7 @@ fn sim_dmh_hmc() {
                 .collect::<Vec<f64>>();
 
             let sum = vec.iter().sum::<f64>();
-            let number_of_plaquette = sim.lattice().get_number_of_points() as f64;
+            let number_of_plaquette = sim.lattice().number_of_points() as f64;
             let c1 = 8_f64 / 3_f64;
             let c2 = 1.951315_f64;
             let c3 = 6.8612_f64;
@@ -444,7 +444,7 @@ fn sim_dmh_hmc() {
                 .par_bridge()
                 .map(|point| {
                     sim.link_matrix()
-                        .get_pij(
+                        .pij(
                             &point,
                             &Direction::<3>::positive_directions()[0],
                             &Direction::positive_directions()[1],
@@ -454,7 +454,7 @@ fn sim_dmh_hmc() {
                 })
                 .sum::<Option<f64>>()
                 .unwrap();
-            let number_of_plaquette = sim.lattice().get_number_of_points() as f64;
+            let number_of_plaquette = sim.lattice().number_of_points() as f64;
             let c1 = 8_f64 / 3_f64;
             let c2 = 1.951315_f64;
             let c3 = 6.8612_f64;

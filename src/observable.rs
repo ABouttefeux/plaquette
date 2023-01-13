@@ -7,7 +7,7 @@ use rayon::prelude::*;
 
 pub fn volume_obs(p: &LatticePoint<3>, state: &LatticeStateDefault<3>) -> f64 {
     let number_of_directions = (Direction::<3>::dim() * (Direction::<3>::dim() - 1)) * 2; // ( *4 / 2)
-    let directions_all = Direction::<3>::get_all_directions();
+    let directions_all = Direction::<3>::directions();
     // We consider all plaquette in positive and negative directions
     // but we avoid counting two times the plaquette P_IJ P_JI
     // as this is manage by taking the real part
@@ -16,11 +16,11 @@ pub fn volume_obs(p: &LatticePoint<3>, state: &LatticeStateDefault<3>) -> f64 {
         .map(|dir_1| {
             directions_all
                 .iter()
-                .filter(|dir_2| dir_1.to_index() > dir_2.to_index())
+                .filter(|dir_2| dir_1.index() > dir_2.index())
                 .map(|dir_2| {
                     state
                         .link_matrix()
-                        .get_pij(&p, &dir_1, &dir_2, state.lattice())
+                        .pij(&p, &dir_1, &dir_2, state.lattice())
                         .map(|el| 1_f64 - el.trace().real() / 3_f64)
                         .unwrap()
                 })
@@ -37,7 +37,7 @@ pub fn volume_obs_mean(state: &LatticeStateDefault<3>) -> f64 {
         .par_bridge()
         .map(|point| volume_obs(&point, state))
         .sum::<f64>();
-    let number_of_plaquette = state.lattice().get_number_of_points() as f64;
+    let number_of_plaquette = state.lattice().number_of_points() as f64;
 
     parameter_volume(sum / number_of_plaquette, state.beta())
 }
@@ -57,16 +57,16 @@ pub fn parameter_volume(value: f64, beta: f64) -> f64 {
 }
 
 pub fn e_correletor(
-    state: &LatticeStateWithEFieldSyncDefault<LatticeStateDefault<3>, 3>,
-    state_new: &LatticeStateWithEFieldSyncDefault<LatticeStateDefault<3>, 3>,
+    state: &LatticeStateEFSyncDefault<LatticeStateDefault<3>, 3>,
+    state_new: &LatticeStateEFSyncDefault<LatticeStateDefault<3>, 3>,
     pt: &LatticePoint<3>,
 ) -> Option<f64> {
     Some(
         state_new
             .e_field()
-            .get_e_vec(pt, state_new.lattice())?
+            .e_vec(pt, state_new.lattice())?
             .iter()
-            .zip(state.e_field().get_e_vec(pt, state.lattice())?.iter())
+            .zip(state.e_field().e_vec(pt, state.lattice())?.iter())
             .map(|(el1, el2)| {
                 el1.iter()
                     .zip(el2.iter())
@@ -79,19 +79,19 @@ pub fn e_correletor(
 }
 
 pub fn b_correletor(
-    state: &LatticeStateWithEFieldSyncDefault<LatticeStateDefault<3>, 3>,
-    state_new: &LatticeStateWithEFieldSyncDefault<LatticeStateDefault<3>, 3>,
+    state: &LatticeStateEFSyncDefault<LatticeStateDefault<3>, 3>,
+    state_new: &LatticeStateEFSyncDefault<LatticeStateDefault<3>, 3>,
     pt: &LatticePoint<3>,
 ) -> Option<f64> {
     Some(
         state_new
             .link_matrix()
-            .get_magnetic_field_vec(pt, state_new.lattice())?
+            .magnetic_field_vec(pt, state_new.lattice())?
             .iter()
             .zip(
                 state
                     .link_matrix()
-                    .get_magnetic_field_vec(pt, state.lattice())?
+                    .magnetic_field_vec(pt, state.lattice())?
                     .iter(),
             )
             .map(|(el1, el2)| (el1 * el2).trace().real())
@@ -116,10 +116,10 @@ where
     for _ in 0..spacing {
         left_product *= state_zero
             .link_matrix()
-            .get_matrix(&LatticeLink::new(pt, *dir), state_zero.lattice())?;
+            .matrix(&LatticeLink::new(pt, *dir), state_zero.lattice())?;
         right_product *= state_new
             .link_matrix()
-            .get_matrix(&LatticeLink::new(pt, -dir), state_zero.lattice())?;
+            .matrix(&LatticeLink::new(pt, -dir), state_zero.lattice())?;
         pt = state_zero.lattice().add_point_direction(pt, dir);
     }
     Some(left_product * right_product.adjoint())

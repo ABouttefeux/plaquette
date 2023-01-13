@@ -1,6 +1,6 @@
 use std::error::Error;
 
-use lattice_qcd_rs::lattice::LatticeCyclique;
+use lattice_qcd_rs::lattice::LatticeCyclic;
 use lattice_qcd_rs::{Complex, ComplexField};
 use once_cell::sync::Lazy;
 use plaquette::io::read_file_csv;
@@ -29,9 +29,9 @@ static NUMBER_OF_MEASUREMENT: Lazy<usize> = Lazy::new(|| {
 const LATTICE_DIM: usize = 16;
 
 fn main() {
-    let lean_mean = LatticeCyclique::<3>::new(1_f64, LATTICE_DIM)
+    let lean_mean = LatticeCyclic::<3>::new(1_f64, LATTICE_DIM)
         .unwrap()
-        .get_number_of_points() as f64;
+        .number_of_points() as f64;
 
     std::fs::create_dir_all(format!("{}/{}", DIRECTORY, PLOT_SUB_DIR)).unwrap();
     const FIELD_NAMES: [&str; 2] = ["e", "b"];
