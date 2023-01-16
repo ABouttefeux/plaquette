@@ -13,7 +13,7 @@ members = ["simulation-bin"]
 
 [dependencies]
 lattice-qcd-rs = {git = "https://github.com/ABouttefeux/lattice-qcd-rs", branche = "develop"}
-nalgebra = { version = "0.31.4", features = ["serde-serialize"] }
+nalgebra = { version = "0.32.1", features = ["serde-serialize"] }
 rand = "0.8.5"
 rand_distr = "0.4.3"
 serde = { version = "1.0", features = ["derive"] }
