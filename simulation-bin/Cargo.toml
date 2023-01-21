@@ -8,7 +8,7 @@ publish = false
 
 [dependencies]
 indicatif = "0.16"
-nalgebra = "0.31.4"
+nalgebra = "0.32"
 rand = "0.8.5"
 rand_distr = "0.4.3"
 lattice-qcd-rs = {git = "https://github.com/ABouttefeux/lattice-qcd-rs", branch = "develop"}
