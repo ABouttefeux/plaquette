@@ -763,9 +763,9 @@ dependencies = [
 
 [[package]]
 name = "nalgebra"
-version = "0.32.1"
+version = "0.32.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f6515c882ebfddccaa73ead7320ca28036c4bc84c9bcca3cc0cbba8efe89223a"
+checksum = "d68d47bba83f9e2006d117a9a33af1524e655516b8919caac694427a6fb1e511"
 dependencies = [
  "approx",
  "matrixmultiply",
@@ -914,7 +914,7 @@ dependencies = [
  "csv",
  "indicatif",
  "lattice-qcd-rs 0.2.1 (git+https://github.com/ABouttefeux/lattice-qcd-rs)",
- "nalgebra 0.32.1",
+ "nalgebra 0.32.2",
  "once_cell",
  "plotter_backend_text",
  "plotters",
@@ -1304,7 +1304,7 @@ dependencies = [
  "dialoguer",
  "indicatif",
  "lattice-qcd-rs 0.2.1 (git+https://github.com/ABouttefeux/lattice-qcd-rs?branch=develop)",
- "nalgebra 0.32.1",
+ "nalgebra 0.32.2",
  "rand",
  "rand_distr",
  "rand_xoshiro",
