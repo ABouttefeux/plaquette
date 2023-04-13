@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":[["BETA",""],["DIRECTORY",""],["DT",""],["FFT_RESOLUTION_SIZE",""],["LATTICE_DIM",""],["MAX_W",""],["PLOT_SUB_DIR",""],["SIZE",""]],"fn":[["get_max_min",""],["get_step_and_max",""],["main",""],["plot_fft_all",""],["plot_fft_eb_err_norm",""],["plot_fft_one",""]],"static":[["NUMBER_OF_MEASUREMENT",""]]};

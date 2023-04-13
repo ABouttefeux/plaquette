@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":[["BETA",""],["HIGH_PT",""],["LOW_PT",""],["NUMBER_OF_DATA",""]],"fn":[["get_values",""],["get_vect_dim",""],["main",""],["main_cross_check_volume",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":[["BETA",""],["DIRECTORY",""],["DT",""],["INTEGRATOR",""],["LATTICE_DIM",""],["LATTICE_SIZE",""],["MAXT_IME",""],["SEED",""],["SPACING",""],["SPACING_LEN",""]],"fn":[["main",""],["main_sim",""],["measure",""]],"static":[["NUMBER_OF_MEASUREMENT",""]],"type":[["ResultMeasure",""]]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":[["config","Configuration for simulation"],["config_scan","module containing the configuration scan."],["data_analysis","Data analysis and saving to files"],["io",""],["observable",""],["plot",""],["plot_corr_e",""],["rng",""],["sim",""]]};

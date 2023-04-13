@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":[["Config","Configuration for the lattice and simulation"],["LatticeConfig","Configuration for the lattice"],["MonteCarloConfig","Configuration for the Monte Carlo algorithm"],["SimConfig","Configuration for the simulation"]]};

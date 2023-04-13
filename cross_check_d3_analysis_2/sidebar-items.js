@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":[["BETA",""],["BOOSTRAP_NUMBER_OF_TIMES",""],["DIR",""],["N_ARRAY",""],["SEED",""]],"enum":[["ErrorPlot",""]],"fn":[["main",""],["plot_data",""],["read_file",""],["statistical_boot_strap_mean",""],["statistical_boot_strap_method_block",""],["statistical_boot_strap_method_individual",""],["write_to_file_csv",""]],"type":[["DataComputed",""]]};
